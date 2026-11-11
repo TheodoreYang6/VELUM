@@ -1,0 +1,183 @@
+.verdict-wrap {
+  position: relative; margin-top: 8px; padding: 30px 34px 28px;
+  background: var(--ink-2); border: 1px solid var(--gold-dim);
+  border-radius: var(--r-md);
+  box-shadow: inset 0 1px 0 rgba(200,164,92,.14), inset 0 0 0 6px var(--ink-2), inset 0 0 0 7px rgba(200,164,92,.1);
+}
+.verdict-wrap::before, .verdict-wrap::after {
+  content: ''; position: absolute; width: 9px; height: 9px;
+  border: 1px solid var(--gold); transform: rotate(45deg);
+}
+.verdict-wrap::before { left: 12px; top: 12px; }
+.verdict-wrap::after { right: 12px; bottom: 12px; }
+.verdict-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.verdict-head .eyebrow { margin-bottom: 0; }
+.verdict-state { font-size: 11px; color: var(--text-3); }
+.verdict-main { margin: 24px 0 6px; padding: 22px 24px; background: var(--ink); border-left: 2px solid var(--gold); }
+.verdict-quote { font-family: var(--serif); font-size: 24px; line-height: 1.65; color: var(--gold-bright); letter-spacing: .03em; }
+.verdict-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 20px; }
+.verdict-meta > div { display: grid; gap: 6px; }
+.verdict-meta span { font-size: 11px; letter-spacing: .14em; color: var(--text-3); }
+.verdict-meta strong { font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--text); line-height: 1.6; }
+.verdict-section {
+  font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--gold-bright);
+  margin: 30px 0 14px; display: flex; align-items: center; gap: 12px;
+}
+.verdict-section::after { content: ''; flex: 1; height: 1px; background: var(--line-soft); }
+.verdict-positions { display: grid; gap: 10px; }
+.verdict-pos { border: 1px solid var(--line-soft); border-radius: var(--r-sm); padding: 14px 16px; background: var(--ink); }
+.verdict-pos-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 12px; }
+.verdict-pos-thumb { width: 34px; height: 52px; border: 1px solid var(--gold-dim); border-radius: 3px; object-fit: cover; align-self: center; box-shadow: 0 4px 12px rgba(0,0,0,.45); flex: 0 0 auto; }
+.verdict-pos-head span:first-child { color: var(--gold); letter-spacing: .1em; }
+.verdict-pos-head span:nth-child(2) { font-family: var(--serif); font-size: 16px; color: var(--text); }
+.verdict-pos p { margin: 8px 0 0; color: var(--text-2); font-size: 13px; line-height: 1.8; }
+.verdict-para { color: var(--text-2); font-size: 13.5px; line-height: 1.95; margin: 0; }
+.verdict-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.verdict-col { border: 1px solid var(--line-soft); border-radius: var(--r-sm); padding: 16px 18px; }
+.verdict-col h4 { font-family: var(--serif); font-size: 14px; font-weight: 400; color: var(--gold); margin: 0 0 10px; }
+.verdict-col ul, .verdict-col ol { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 12.5px; line-height: 1.85; }
+.verdict-col li { margin-bottom: 6px; }
+.verdict-summary { margin-top: 24px; padding: 20px 22px; border: 1px solid var(--line); background: rgba(200,164,92,.045); }
+.verdict-summary p { margin: 8px 0 0; font-family: var(--serif); font-size: 16px; line-height: 1.9; color: var(--text); }
+.verdict-trace { margin-top: 14px; }
+.detail-fold { margin-top: 34px; border: 1px solid var(--line-soft); border-radius: var(--r-md); background: var(--ink-2); }
+.detail-fold > summary {
+  cursor: pointer; list-style: none; padding: 16px 22px;
+  font-family: var(--serif); font-size: 15px; color: var(--gold-bright);
+  display: flex; align-items: center; gap: 12px;
+}
+.detail-fold > summary::-webkit-details-marker { display: none; }
+.detail-fold > summary::before { content: '◇'; color: var(--gold); }
+.detail-fold[open] > summary { border-bottom: 1px solid var(--line-soft); }
+.detail-fold-body { padding: 24px 22px 6px; }
+
+@media (max-width: 980px) {
+  .verdict-wrap { padding: 22px 18px; }
+  .verdict-quote { font-size: 19px; }
+  .verdict-meta, .verdict-cols { grid-template-columns: 1fr; }
+}
+
+/* ---- 文章式最终评定：以连续文字为主，结构化信息退居辅助 ---- */
+.vd-article { margin-top: 8px; }
+.vd-opening {
+  font-family: var(--serif); font-size: 16px; line-height: 2.05;
+  color: var(--text-2); margin: 22px 0 0;
+}
+.vd-quote {
+  font-family: var(--serif); font-size: 25px; line-height: 1.75;
+  letter-spacing: .035em; color: var(--gold-bright);
+  margin: 26px 0 30px; padding: 4px 0 4px 22px;
+  border-left: 2px solid var(--gold);
+}
+.vd-theme {
+  margin: 0 0 30px; padding: 20px 24px;
+  background: var(--ink); border: 1px solid var(--line-soft); border-radius: var(--r-sm);
+}
+.vd-kicker {
+  display: block; font-size: 10.5px; letter-spacing: .22em;
+  color: var(--gold-dim); margin-bottom: 10px;
+}
+.vd-theme p {
+  margin: 0; font-family: var(--serif); font-size: 16px;
+  line-height: 1.95; color: var(--text);
+}
+.vd-prose { margin: 0 0 8px; }
+.vd-prose p {
+  font-family: var(--serif); font-size: 15.5px; line-height: 2.15;
+  letter-spacing: .012em; color: var(--text); margin: 0 0 20px;
+}
+.vd-prose p:last-child { margin-bottom: 0; }
+.vd-article .verdict-section { margin-top: 36px; }
+.vd-guidance-list {
+  list-style: none; counter-reset: vdg; margin: 0; padding: 0;
+  display: grid; gap: 12px;
+}
+.vd-guidance-list li {
+  counter-increment: vdg; position: relative; padding: 14px 18px 14px 52px;
+  border: 1px solid var(--line-soft); border-radius: var(--r-sm); background: var(--ink);
+  color: var(--text-2); font-size: 13.5px; line-height: 1.9;
+}
+.vd-guidance-list li::before {
+  content: counter(vdg, decimal-leading-zero); position: absolute; left: 18px; top: 13px;
+  font-family: var(--serif); font-size: 14px; color: var(--gold);
+}
+.vd-cautions {
+  margin-top: 26px; padding: 14px 18px; border-left: 1px solid var(--gold-dim);
+  background: rgba(200,164,92,.035);
+}
+.vd-cautions span {
+  display: block; font-size: 10.5px; letter-spacing: .22em;
+  color: var(--gold-dim); margin-bottom: 8px;
+}
+.vd-cautions p { margin: 0; color: var(--text-3); font-size: 12.5px; line-height: 1.9; }
+.vd-closing {
+  margin: 34px 0 0; padding: 22px 24px;
+  border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+  font-family: var(--serif); font-size: 17px; line-height: 2;
+  color: var(--text); text-align: center; letter-spacing: .03em;
+}
+.vd-boundary {
+  margin-top: 20px; font-size: 11.5px; line-height: 1.85; color: var(--text-3);
+}
+
+@media (max-width: 980px) {
+  .vd-quote { font-size: 20px; padding-left: 16px; }
+  .vd-opening { font-size: 15px; }
+  .vd-prose p { font-size: 14.5px; line-height: 2; }
+  .vd-closing { font-size: 15px; }
+}
+
+/* ---- 逐牌札记：三栏严格对齐，去掉头部挤在一行的错落感 ---- */
+/* 只作用于新版文章页；旧版 LegacyVerdictBody 沿用原有 .verdict-pos 样式。 */
+.verdict-notes { gap: 10px; }
+.verdict-notes .verdict-pos {
+  display: grid;
+  grid-template-columns: 76px 44px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 18px;
+  padding: 14px 18px;
+}
+.verdict-notes .verdict-pos-index {
+  align-self: stretch;
+  display: flex; flex-direction: column; justify-content: center; gap: 3px;
+  border-right: 1px solid var(--line-soft); padding-right: 14px;
+}
+.verdict-notes .verdict-pos-num {
+  font-family: var(--serif); font-size: 11px;
+  color: var(--gold-dim); letter-spacing: .14em;
+}
+.verdict-notes .verdict-pos-name {
+  font-size: 12px; color: var(--gold); letter-spacing: .08em; line-height: 1.45;
+}
+.verdict-notes .verdict-pos-thumb {
+  width: 44px; height: 66px; object-fit: cover;
+  border: 1px solid var(--gold-dim); border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.45);
+}
+.verdict-notes .verdict-pos-body { min-width: 0; }
+.verdict-notes .verdict-pos-title {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.verdict-notes .verdict-pos-title .cd-inline-link {
+  font-family: var(--serif); font-size: 15px; color: var(--text);
+  border-bottom: 0; letter-spacing: .02em;
+}
+.verdict-notes .verdict-pos-title .cd-inline-link:hover {
+  color: var(--gold-bright); border-bottom: 1px solid var(--gold-dim);
+}
+.verdict-notes .verdict-pos-body p {
+  margin: 6px 0 0; color: var(--text-2); font-size: 13px; line-height: 1.8;
+}
+
+@media (max-width: 980px) {
+  .verdict-notes .verdict-pos {
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 14px; row-gap: 10px; padding: 14px;
+  }
+  .verdict-notes .verdict-pos-index {
+    grid-column: 1 / -1;
+    flex-direction: row; align-items: baseline; gap: 10px;
+    border-right: 0; border-bottom: 1px solid var(--line-soft);
+    padding: 0 0 8px;
+  }
+}

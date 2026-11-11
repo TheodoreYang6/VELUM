@@ -1,0 +1,450 @@
+.ritual-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(6, 9, 14, .965);
+  display: flex; align-items: center; justify-content: center;
+  padding: 18px;
+  animation: overlayIn .35s ease-out both;
+}
+.ritual-frame {
+  --cw: 104px; --ch: 168px;
+  width: min(1320px, 100%); height: min(900px, calc(100vh - 36px));
+  display: flex; flex-direction: column;
+  background: #0a0e15; border: 1px solid var(--gold-dim);
+  border-radius: 8px; position: relative; overflow: hidden;
+  box-shadow: 0 0 0 6px rgba(200,164,92,.06), 0 24px 80px rgba(0,0,0,.6);
+}
+.ritual-frame[data-count='many'] { --cw: 70px; --ch: 112px; }
+.ritual-frame[data-phase='draw'] { --cw: 78px; --ch: 126px; }
+.ritual-frame[data-phase='draw'][data-count='many'] { --cw: 68px; --ch: 108px; }
+
+.ritual-header {
+  flex: 0 0 auto; display: grid; grid-template-columns: 1fr auto auto;
+  align-items: center; gap: 24px; padding: 16px 26px;
+  border-bottom: 1px solid var(--line);
+}
+.ritual-header-brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.ritual-seal {
+  width: 32px; height: 32px; flex: 0 0 32px;
+  border-radius: 4px; border: 1px solid var(--gold-dim);
+}
+.ritual-title { font-family: var(--serif); font-size: 18px; color: var(--text); letter-spacing: .06em; }
+.ritual-steps { display: flex; gap: 18px; }
+.ritual-step { font-size: 11px; color: var(--text-3); display: flex; align-items: center; gap: 7px; letter-spacing: .08em; }
+.ritual-step-dot { width: 6px; height: 6px; border: 1px solid var(--text-3); transform: rotate(45deg); }
+.ritual-step.active { color: var(--gold-bright); }
+.ritual-step.active .ritual-step-dot { background: var(--gold); border-color: var(--gold); }
+.ritual-step.done { color: var(--gold-dim); }
+.ritual-step.done .ritual-step-dot { background: var(--gold-dim); border-color: var(--gold-dim); }
+.ritual-close {
+  width: 32px; height: 32px; border: 1px solid var(--line); background: transparent;
+  color: var(--text-2); font-size: 20px; line-height: 1; border-radius: 3px;
+}
+.ritual-close:hover:not(:disabled) { color: var(--gold-bright); border-color: var(--gold); }
+.ritual-close:disabled { opacity: .3; cursor: not-allowed; }
+
+.ritual-body {
+  flex: 1 1 auto; position: relative; overflow: hidden; outline: none;
+  --mx: .5; --my: .5;
+  background:
+    radial-gradient(circle at calc(var(--mx) * 100%) calc(var(--my) * 100%), rgba(200,164,92,.10), transparent 40%),
+    radial-gradient(circle at 50% 48%, rgba(200,164,92,.045), transparent 62%);
+}
+.ritual-table-orbit {
+  position: absolute; left: 50%; top: 34%; width: 62%; height: 44%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(200,164,92,.13); border-radius: 50%;
+  pointer-events: none;
+}
+.ritual-table-orbit::after {
+  content: ''; position: absolute; inset: 9%;
+  border: 1px dashed rgba(200,164,92,.09); border-radius: 50%;
+}
+.ritual-corner {
+  position: absolute; width: 11px; height: 11px;
+  border: 1px solid var(--gold); transform: rotate(45deg); pointer-events: none;
+}
+.ritual-corner-a { left: 20px; top: 20px; }
+.ritual-corner-b { right: 20px; bottom: 20px; }
+.ritual-center-note {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--serif); color: var(--gold-dim); letter-spacing: .25em; font-size: 14px;
+}
+.ritual-center-note.warn { color: #d9a58e; letter-spacing: .05em; padding: 0 40px; text-align: center; }
+
+.ritual-intro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+.ritual-intro-deck {
+  width: 118px; height: 190px; border: 1px solid var(--gold);
+  background: url("/velum-cardback.svg") center / cover no-repeat, #0b1220; position: relative;
+  box-shadow: inset 0 0 0 5px #0d1420, inset 0 0 0 6px rgba(200,164,92,.35), 0 0 46px rgba(200,164,92,.1);
+  animation: introFloat 3.4s ease-in-out infinite;
+}
+.ritual-intro-sigil { display: none; }
+.ritual-intro-title { font-family: var(--serif); font-size: 21px; color: var(--gold-bright); letter-spacing: .2em; }
+.ritual-intro p { color: var(--text-2); font-size: 12.5px; margin: 0; max-width: 460px; line-height: 1.8; }
+
+.ritual-shuffle { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+.ritual-shuffle-deck {
+  width: 118px; height: 190px; position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(calc((var(--my) - .5) * -9deg)) rotateY(calc((var(--mx) - .5) * 14deg));
+  transition: transform .18s ease-out;
+}
+.shuffle-card {
+  position: absolute; inset: 0; border-radius: 4px;
+  background: url("/velum-cardback.svg") center / cover no-repeat, #0b1220;
+  border: 1px solid var(--gold-dim);
+  box-shadow: inset 0 0 0 4px rgba(10,14,21,.6), 0 0 10px rgba(0,0,0,.4);
+  transition: transform .22s ease-out;
+}
+.ritual-shuffle-caption, .ritual-cut-caption, .ritual-complete-caption {
+  font-family: var(--serif); font-size: 13px; color: var(--gold-bright); letter-spacing: .16em;
+}
+.ritual-energy { width: 320px; height: 2px; background: rgba(200,164,92,.14); }
+.ritual-energy-fill { height: 100%; background: var(--gold); transition: width .2s; box-shadow: 0 0 12px rgba(200,164,92,.5); }
+.ritual-energy-text { font-size: 11px; color: var(--text-3); letter-spacing: .1em; }
+/* 洗牌满格：牌叠收回、停止随鼠标倾斜，作为自动进入切牌前的过渡 */
+.ritual-shuffle-deck.settling {
+  transform: rotateX(0deg) rotateY(0deg) scale(.97);
+  transition: transform .6s cubic-bezier(.22,.61,.36,1);
+  filter: drop-shadow(0 0 20px rgba(200,164,92,.28));
+}
+
+.ritual-cut { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+.ritual-cut-piles { display: flex; gap: 46px; }
+.ritual-cut-pile {
+  width: 112px; height: 176px;
+  background: url("/velum-cardback.svg") center / cover no-repeat, #0b1220;
+  border: 1px solid var(--gold-dim); border-radius: 4px; color: var(--gold);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px;
+  padding-bottom: 14px;
+  box-shadow: 0 0 18px rgba(200,164,92,.14);
+  transition: transform .45s, opacity .45s, border-color .2s;
+}
+.ritual-cut-glyph { display: none; }
+.ritual-cut-pile:hover:not(:disabled) { border-color: var(--gold); transform: translateY(-8px); }
+.ritual-cut-pile.merged { animation: pileMerge .72s cubic-bezier(.2,.7,.3,1) both; }
+.ritual-cut-glyph { font-family: var(--serif); font-size: 24px; }
+.ritual-cut-num { font-size: 11px; letter-spacing: .12em; color: var(--text-2); }
+.ritual-cut-progress { font-size: 12px; color: var(--gold-dim); letter-spacing: .15em; }
+
+.ritual-source-deck {
+  position: absolute; left: 8.5%; top: 50%; width: 100px; height: 160px;
+  margin: -80px 0 0 -50px; background: #111a2b;
+  border: 1px solid var(--gold); border-radius: 4px; color: var(--gold-dim);
+  box-shadow: inset 0 0 0 5px #0d1420, inset 0 0 0 6px rgba(200,164,92,.35), 0 0 34px rgba(200,164,92,.12);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  font-size: 11px; letter-spacing: .2em;
+  animation: sourcePulse 2.4s ease-in-out infinite;
+}
+.ritual-source-deck:hover { border-color: var(--gold-bright); }
+.ritual-source-sigil { width: 36px; height: 36px; border: 1px solid var(--gold); transform: rotate(45deg); position: relative; }
+.ritual-source-sigil::after { content: ''; position: absolute; inset: 8px; border: 1px solid var(--gold-dim); }
+.ritual-draw-caption {
+  position: absolute; left: 0; right: 0; top: 18px; text-align: center;
+  font-family: var(--serif); font-size: 16px; color: var(--gold-bright); letter-spacing: .12em;
+}
+.ritual-draw-caption span { color: var(--text-2); font-size: 13px; }
+.ritual-draw-hint { font-family: var(--sans); font-size: 11px; color: var(--text-3); letter-spacing: .08em; margin-top: 6px; }
+
+.ritual-slot {
+  position: absolute; width: var(--cw); height: var(--ch);
+  margin-left: calc(var(--cw) / -2); margin-top: calc(var(--ch) / -2);
+  transition: left .82s cubic-bezier(.2,.75,.2,1), top .82s cubic-bezier(.2,.75,.2,1), opacity .5s, transform .6s;
+  cursor: pointer;
+}
+.ritual-slot.state-hidden { opacity: 0; pointer-events: none; transform: scale(.32) rotate(-16deg); }
+.ritual-slot.state-dealt, .ritual-slot.state-flipped { opacity: 1; transform: scale(1); }
+.ritual-slot.selected .ritual-card { box-shadow: 0 0 0 1px var(--gold), 0 0 26px rgba(200,164,92,.28); }
+.ritual-card {
+  width: 100%; height: 100%; position: relative; transform-style: preserve-3d;
+  transform: rotateY(0deg); transition: transform .95s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+  border-radius: 4px;
+}
+.state-flipped .ritual-card, .ritual-card.flipped { transform: rotateY(180deg); }
+.ritual-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 4px; overflow: hidden; }
+.ritual-back {
+  transform: rotateY(0deg);
+  background: url("/velum-cardback.svg") center / cover no-repeat, #0b1220;
+  border: 1px solid var(--gold-dim);
+  box-shadow: 0 0 18px rgba(200,164,92,.16);
+}
+.ritual-back::before, .ritual-back::after { content: none; }
+.ritual-back-sigil { display: none; }
+.ritual-front {
+  transform: rotateY(180deg); background: #18202f; border: 1px solid var(--gold);
+  background-size: cover; background-position: center;
+  box-shadow: inset 0 0 0 3px #101724, inset 0 0 0 4px rgba(200,164,92,.3);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 5px; padding: 8px 5px; text-align: center;
+}
+.ritual-front::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(180deg, rgba(8,12,18,.34), rgba(8,12,18,.66));
+}
+.ritual-front > * { position: relative; z-index: 1; }
+.ritual-front.is-reversed { border-color: #b98a4e; }
+.rf-index { font-size: 9px; letter-spacing: .18em; color: var(--gold-dim); }
+.rf-glyph { font-family: var(--serif); font-size: 19px; color: var(--gold); line-height: 1.1; }
+.ritual-front.is-reversed .rf-glyph, .rf-glyph.turned { transform: rotate(180deg); color: #d0a05c; }
+.rf-name { font-family: var(--serif); font-size: 13.5px; color: var(--text); line-height: 1.35; }
+.rf-key { font-size: 9px; color: var(--text-3); line-height: 1.4; }
+.rf-orient {
+  font-size: 9px; color: var(--gold-dim); letter-spacing: .12em;
+  border-top: 1px solid var(--line-soft); padding-top: 4px; width: 72%;
+}
+.ritual-front.is-reversed .rf-orient { color: #d0a05c; }
+.ritual-slot-label {
+  position: absolute; left: -10px; right: -10px; bottom: -22px; text-align: center;
+  font-size: 10px; color: var(--gold-dim); letter-spacing: .06em; white-space: nowrap;
+}
+/* 已抽出但还没翻开的牌：给一个可点的金色提示，翻不翻由用户决定 */
+.ritual-slot.state-dealt .ritual-card {
+  box-shadow: 0 0 0 1px rgba(200,164,92,.42), 0 0 16px rgba(200,164,92,.13);
+}
+.ritual-slot.state-dealt:hover .ritual-card {
+  box-shadow: 0 0 0 1px var(--gold), 0 0 24px rgba(200,164,92,.32);
+}
+.ritual-slot.state-dealt .ritual-slot-label { color: var(--gold); letter-spacing: .14em; }
+.ritual-slot.state-dealt:hover .ritual-slot-label { color: var(--gold-bright); }
+.ritual-complete-caption { position: absolute; left: 0; right: 0; top: 14px; text-align: center; }
+.ritual-detail {
+  position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
+  width: min(620px, 78%); padding: 10px 18px 12px; text-align: center;
+  background: rgba(13,18,27,.94); border: 1px solid var(--line);
+}
+.ritual-detail .field-label { margin-bottom: 2px; }
+.ritual-detail-name { font-family: var(--serif); font-size: 15px; color: var(--gold-bright); }
+.ritual-detail p { margin: 4px 0 0; font-size: 11px; color: var(--text-2); line-height: 1.5; }
+
+.ritual-submitting {
+  position: absolute; inset: 0; z-index: 5;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 42%, rgba(200, 164, 92, 0.075), transparent 72%),
+    radial-gradient(ellipse 100% 80% at 50% 115%, rgba(0, 0, 0, 0.5), transparent 70%),
+    rgba(8, 12, 18, 0.97);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  animation: overlayIn .28s ease-out both;
+}
+
+/* ── 徽记变体：VELUM 帷幕揭幕 ─────────────────────────────────
+   全部构件取自 velum-mark.svg，分层描绘／旋转／呼吸，不用通用旋转方块 */
+.ritual-submit-sigil {
+  width: 168px; height: 168px; margin-bottom: 2px;
+  display: grid; place-items: center;
+  filter: drop-shadow(0 0 18px rgba(200, 164, 92, 0.16));
+}
+.vs-sigil { width: 100%; height: 100%; overflow: visible; }
+.vs-sigil .vs-glow { animation: vsBreath 4.2s ease-in-out infinite; transform-origin: 120px 112px; }
+
+/* 描绘：所有线稿从中心向外逐层显形，之后保持静态，避免持续闪烁 */
+.vs-draw {
+  fill: none; stroke: var(--gold); stroke-width: 1; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: var(--len); stroke-dashoffset: var(--len);
+  animation: vsDraw 1.15s cubic-bezier(.22,1,.36,1) var(--d, 0s) both;
+}
+.vs-ring-outer { stroke: var(--gold-dim); }
+.vs-ring-inner { stroke: var(--gold); stroke-width: .5; opacity: .5; }
+.vs-frames .vs-draw:nth-child(2) { stroke: var(--gold-dim); stroke-width: .6; }
+.vs-frames .vs-draw:nth-child(3) { stroke: var(--gold); stroke-width: .4; opacity: .42; }
+.vs-drapes .vs-draw { stroke: var(--gold-bright); stroke-width: 1.5; }
+.vs-drapes .vs-draw:nth-child(n+5) { stroke: var(--gold); stroke-width: .9; }
+.vs-canopy .vs-draw { stroke: var(--gold); stroke-width: 1.2; }
+.vs-base .vs-draw { stroke: var(--gold-dim); }
+.vs-canopy circle, .vs-base circle { fill: var(--gold); }
+
+/* 双环缓慢反向自转 */
+.vs-rings { transform-origin: 120px 120px; animation: vsSpin 46s linear infinite; }
+.vs-orbit {
+  fill: none; stroke: var(--gold); stroke-width: .5; stroke-dasharray: 2 7;
+  opacity: .38; transform-origin: 120px 120px;
+  animation: vsSpinBack 32s linear infinite;
+}
+/* 一道沿外环游走的亮弧：揭幕的「视线」 */
+.vs-arc {
+  fill: none; stroke: var(--gold-bright); stroke-width: 1.6; stroke-linecap: round;
+  stroke-dasharray: 96 557; opacity: .9; transform-origin: 120px 120px;
+  transform: rotate(-90deg);
+  animation: vsArc 5.6s cubic-bezier(.4,0,.2,1) infinite;
+}
+
+/* 对角刻点依次点亮 */
+.vs-corner { fill: var(--gold); opacity: .22; animation: vsCorner 2.8s ease-in-out infinite; animation-delay: calc(var(--i) * .34s); }
+.vs-canopy-gem, .vs-base-gem { fill: var(--gold-bright); opacity: .35; animation: vsCorner 2.8s ease-in-out infinite; }
+.vs-spark { fill: var(--gold-bright); opacity: .3; animation: vsSpark 2.8s ease-in-out infinite; animation-delay: calc(var(--i) * .22s); }
+
+/* 华盖横杆上一道往复的金光 */
+.vs-sweep {
+  fill: none; stroke: #fff3d4; stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 26 200; stroke-dashoffset: 112;
+  animation: vsSweep 3.2s ease-in-out infinite;
+}
+
+/* 中央八芒星：反向自转的光环 + 呼吸的星体 */
+.vs-halo {
+  fill: none; stroke: var(--gold); stroke-width: .6; stroke-dasharray: 2 4;
+  opacity: .62; transform-origin: 120px 104px;
+  animation: vsSpinBack 18s linear infinite;
+}
+.vs-star { transform-origin: 120px 104px; animation: vsStar 3.6s ease-in-out infinite; }
+.vs-star-body { fill: var(--gold); }
+.vs-star-core { fill: #0a0e15; }
+
+.ritual-submit-eyebrow {
+  font-family: var(--display); font-size: 12px; letter-spacing: .48em;
+  color: var(--gold-dim); margin-top: 2px;
+  animation: velumRise .5s cubic-bezier(.22,1,.36,1) .5s both;
+}
+.ritual-submit-title {
+  font-family: var(--display); font-size: 26px; font-weight: 400;
+  color: var(--gold-bright); letter-spacing: .24em; text-align: center;
+  animation: velumRise .5s cubic-bezier(.22,1,.36,1) .62s both;
+}
+.ritual-submit-rule { width: 150px; height: 1px; background: rgba(200,164,92,.16); position: relative; margin: 2px 0 4px; }
+.ritual-submit-rule span {
+  position: absolute; left: 50%; top: -2px; width: 5px; height: 5px;
+  background: var(--gold); transform: translateX(-50%) rotate(45deg);
+}
+.ritual-submitting .ritual-submit-note { margin: 0; font-size: 13px; color: var(--text-3); letter-spacing: .06em; }
+.ritual-submit-steps { display: grid; gap: 9px; margin-top: 14px; }
+.ritual-submitting .ritual-submit-step {
+  display: flex; align-items: center; gap: 11px; font-size: 13.5px; color: var(--text-2);
+  letter-spacing: .1em; animation: stepGlow 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * .46s);
+}
+.ritual-submit-check {
+  width: 8px; height: 8px; border: 1px solid var(--gold); transform: rotate(45deg); flex: 0 0 auto;
+}
+.ritual-loading-bar {
+  width: 300px; height: 1px; background: rgba(200,164,92,.14); overflow: visible;
+  margin-top: 22px; position: relative;
+}
+.ritual-loading-bar span {
+  display: block; width: 34%; height: 100%; background: var(--gold);
+  box-shadow: 0 0 8px rgba(200,164,92,.45);
+  animation: loadingSweep 2.2s cubic-bezier(.4,0,.2,1) infinite;
+}
+
+.ritual-footer {
+  flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 18px;
+  padding: 14px 26px; border-top: 1px solid var(--line);
+}
+.ritual-keyhint { font-size: 11px; color: var(--text-3); letter-spacing: .05em; }
+.ritual-actions { display: flex; align-items: center; gap: 10px; }
+.ritual-progress { font-size: 11.5px; color: var(--gold-dim); margin-right: 8px; }
+
+@keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes introFloat { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(1deg); } }
+@keyframes sourcePulse { 0%, 100% { box-shadow: inset 0 0 0 5px #0d1420, inset 0 0 0 6px rgba(200,164,92,.35), 0 0 26px rgba(200,164,92,.1); } 50% { box-shadow: inset 0 0 0 5px #0d1420, inset 0 0 0 6px rgba(200,164,92,.45), 0 0 46px rgba(200,164,92,.24); } }
+@keyframes sigilSpin { from { transform: rotate(45deg); } to { transform: rotate(405deg); } }
+@keyframes stepGlow { 0%, 100% { opacity: .45; color: var(--text-3); } 50% { opacity: 1; color: var(--gold-bright); } }
+@keyframes loadingSweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(295%); } }
+
+/* ── VELUM 徽记揭幕动画 ─────────────────────────────────── */
+@keyframes vsDraw { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+@keyframes vsSpin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes vsSpinBack { from { transform: rotate(0); } to { transform: rotate(-360deg); } }
+@keyframes vsArc {
+  0%   { transform: rotate(-90deg); opacity: 0; }
+  12%  { opacity: .9; }
+  82%  { opacity: .9; }
+  100% { transform: rotate(270deg); opacity: 0; }
+}
+@keyframes vsSweep {
+  0%   { stroke-dashoffset: 112; opacity: 0; }
+  18%  { opacity: .95; }
+  72%  { opacity: .95; }
+  100% { stroke-dashoffset: -112; opacity: 0; }
+}
+@keyframes vsCorner { 0%, 100% { opacity: .22; } 50% { opacity: 1; } }
+@keyframes vsSpark { 0%, 100% { opacity: .22; } 50% { opacity: 1; } }
+@keyframes vsStar {
+  0%, 100% { transform: scale(.94) rotate(0); filter: drop-shadow(0 0 2px rgba(200,164,92,.2)); }
+  50%      { transform: scale(1.08) rotate(45deg); filter: drop-shadow(0 0 9px rgba(230,201,135,.55)); }
+}
+@keyframes vsBreath { 0%, 100% { opacity: .55; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes velumRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ── 扇形展开与交互式抽牌 ───────────────────────────── */
+.ritual-draw, .ritual-complete { position: absolute; inset: 0; }
+.ritual-body.is-dragging { cursor: grabbing; }
+.ritual-drag-glow {
+  position: absolute; left: calc(var(--mx, .5) * 100%); top: calc(var(--my, .5) * 100%);
+  width: 190px; height: 190px; margin: -95px 0 0 -95px; border-radius: 50%;
+  border: 1px solid rgba(200,164,92,.34);
+  background: radial-gradient(circle, rgba(200,164,92,.13), transparent 66%);
+  pointer-events: none; animation: glowPulse 1.25s ease-in-out infinite;
+}
+.ritual-shuffle-deck.active { filter: drop-shadow(0 0 18px rgba(200,164,92,.22)); }
+
+.ritual-fan {
+  position: absolute; inset: 0; pointer-events: none;
+  transform: translateX(calc((var(--mx, .5) - .5) * 22px)) rotate(calc((var(--mx, .5) - .5) * 1.4deg));
+  transition: transform .28s ease-out;
+}
+.fan-card {
+  position: absolute; width: 74px; height: 118px;
+  margin: -59px 0 0 -37px; padding: 0; border: 0; background: transparent;
+  transform: rotate(var(--deg)); transform-origin: 50% 50%;
+  pointer-events: auto; cursor: pointer;
+  animation: fanSpread .62s cubic-bezier(.18,.75,.25,1) backwards;
+  animation-delay: calc(var(--i) * 8ms);
+  transition: transform .2s ease-out, opacity .35s, filter .2s;
+}
+.fan-card-inner {
+  position: relative; width: 100%; height: 100%;
+  border: 1px solid var(--gold-dim); border-radius: 4px;
+  background: url("/velum-cardback.svg") center / cover no-repeat, #0b1220;
+  box-shadow: inset 0 0 0 2px rgba(10,14,21,.55);
+}
+.fan-sigil { display: none; }
+.fan-card:hover, .fan-card.focused, .fan-card.hovered {
+  transform: translateY(-30px) rotate(var(--deg)) scale(1.09);
+  z-index: 300 !important; filter: drop-shadow(0 10px 22px rgba(0,0,0,.7));
+}
+.fan-card:hover .fan-card-inner, .fan-card.focused .fan-card-inner, .fan-card.hovered .fan-card-inner {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 2px rgba(10,14,21,.55), 0 0 24px rgba(200,164,92,.4);
+}
+.fan-card.taken { opacity: 0; pointer-events: none; }
+
+.ritual-slot.state-dealt { animation: dealFromFan .85s cubic-bezier(.2,.75,.2,1) both; }
+
+@keyframes fanSpread {
+  from { opacity: 0; transform: translate(-460px, -26px) rotate(-24deg) scale(.5); }
+  to { opacity: 1; transform: rotate(var(--deg)); }
+}
+@keyframes dealFromFan {
+  from { transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--fa, 0deg)) scale(.86); opacity: .55; }
+  to { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+}
+@keyframes glowPulse { 0%, 100% { opacity: .45; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.08); } }
+@keyframes pileMerge {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  55% { transform: translateY(-52px) rotate(-9deg) scale(1.05); opacity: 1; }
+  100% { transform: translate(var(--dir, 0px), 44px) rotate(11deg) scale(.55); opacity: .12; }
+}
+
+@media (max-width: 980px) {
+  .ritual-header { grid-template-columns: 1fr auto; gap: 8px; padding: 12px 16px; }
+  .ritual-steps { display: none; }
+  .ritual-footer { flex-direction: column; align-items: stretch; padding: 12px 16px; }
+  .ritual-keyhint { text-align: center; }
+  .ritual-actions { justify-content: center; flex-wrap: wrap; }
+  .ritual-frame { --cw: 76px; --ch: 124px; }
+  .ritual-frame[data-count='many'] { --cw: 66px; --ch: 108px; }
+  .fan-card { width: 58px; height: 94px; margin: -47px 0 0 -29px; }
+  .ritual-cut-piles { gap: 16px; }
+  .ritual-cut-pile { width: 84px; height: 136px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ritual-intro-deck, .ritual-source-deck, .ritual-submit-sigil,
+  .ritual-submit-step, .ritual-loading-bar span { animation: none !important; }
+  .vs-sigil * { animation: none !important; }
+  /* 静态降级：线稿全部可见，旋转停在初始角 */
+  .vs-draw { stroke-dashoffset: 0 !important; }
+  .vs-arc, .vs-sweep { opacity: 0 !important; }
+  .vs-corner, .vs-spark, .vs-canopy-gem, .vs-base-gem { opacity: .85 !important; }
+  .vs-star, .vs-glow, .vs-rings, .vs-orbit, .vs-halo { transform: none !important; filter: none !important; }
+  .ritual-card, .ritual-slot, .shuffle-card,
+  .ritual-shuffle-deck { transition-duration: .01ms; }
+}

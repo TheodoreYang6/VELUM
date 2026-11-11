@@ -1,0 +1,486 @@
+/* ============================================================================
+   VELUM｜帷间 · 视觉精修层 (refine.css)
+   ----------------------------------------------------------------------------
+   定位：不改动既有主题色、页面结构与功能逻辑，仅在所有样式之后叠加一层
+   「克制 / 精致 / 宫廷纹章感」的细节校准。全部改动集中于此文件，可单独回滚。
+
+   参考并取用的成熟设计体系（取其数值纪律，不套用其亮色模板）：
+   · Luxury Theme Design System — 锐角、发丝金线、衬线 display 标题、
+     400/500 双字重、大写宽字距 eyebrow、金色 focus ring
+   · Quiet Luxury / Old Money — 2/4/6px 同心圆角阶梯、单一暖金发丝线作为唯一装饰
+   · High End Visual Design — Double-Bezel 双层描边、单强调色、
+     只动 transform/opacity、150–200ms 克制动效、tactile press state
+   · transitions.dev — 动效 token 化（7 档时长 / 统一缓动族 / 进慢出快 / 错开 40ms）
+   · restrained-minimalism — 标题÷正文 ≥1.8、字阶 ≤6 档、
+     区块间距 > 卡内间距 > 元素间距、双层软阴影、平级内容不降权
+   · 编辑式排版趋势 2025 — Neo-Serif 高对比衬线、大标题、65–75 字符行宽、
+     1.7–1.9 中文行高
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   0 · 字体：自托管高对比 neo-serif（离线可用，SIL OFL 1.1）
+   Cormorant Garamond 只承担拉丁字母 / 数字 / eyebrow / 铭文，中文回退到
+   Noto Serif SC 等既有衬线栈，形成「西文高对比 + 中文宋体」的编辑式对照。
+   ------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/cormorant-garamond-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/cormorant-garamond-latin-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------------------------------------------------------------------------
+   1 · Token：圆角阶梯 / 动效族 / 发丝线 / 字阶 / 层次
+   ------------------------------------------------------------------------- */
+:root {
+  /* 锐角阶梯：三档且同心（内元素 R = 外卡 R − 内边距）。胶囊仅留给开关与圆形徽记 */
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 6px;
+
+  /* 发丝金线：唯一重复装饰，替代「所有面同一条 1px 灰线」的模板感 */
+  --gold-hair: rgba(200, 164, 92, 0.34);
+  --gold-hair-soft: rgba(200, 164, 92, 0.16);
+  --line: rgba(200, 164, 92, 0.26);
+  --line-soft: rgba(200, 164, 92, 0.13);
+
+  /* 明度分层只靠亮度，不增加色相；次级文字略提亮以改善可读性 */
+  --text-2: #b8b1a2;
+  --text-3: #8b8578;
+
+  /* 衬线 display（拉丁/数字）与既有中文衬线栈 */
+  --display: "Cormorant Garamond", "Noto Serif SC", "Source Han Serif SC",
+    "Songti SC", "STSong", Georgia, serif;
+
+  /* 字号阶梯：6 档，标题 ÷ 正文 = 2.6，档间跳跃而非爬坡 */
+  --fs-micro: 11px;      /* 卡牌角标 / 编号 */
+  --fs-label: 12.5px;    /* eyebrow / 字段标签 / 幕间提示 */
+  --fs-caption: 13.5px;  /* 辅助说明 / hint */
+  --fs-body: 15px;       /* 正文 */
+  --fs-lead: 17.5px;     /* 引导句 / 卡牌名 / 小标题 */
+  --fs-h3: 21px;         /* 区块标题 */
+  --fs-h2: 26px;         /* 二级标题 */
+  --fs-h1: 40px;         /* 页面主标题 */
+
+  /* 动效 token：单一缓动族 + 「进慢出快」 */
+  --dur-micro: 80ms;
+  --dur-quick: 150ms;
+  --dur-fast: 250ms;
+  --dur-medium: 350ms;
+  --dur-slow: 500ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 双层软阴影：近层细、远层大扩散，不透明度都压到 6% 以内 */
+  --shadow-near: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-far: 0 20px 40px -28px rgba(0, 0, 0, 0.55);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.3), 0 18px 36px -26px rgba(0, 0, 0, 0.6);
+
+  /* 纹章角括线：8 条 1px 发丝线组成四角 L 形，作全站唯一重复的边角装饰 */
+  --brackets:
+    linear-gradient(var(--gold-hair), var(--gold-hair)),
+    linear-gradient(var(--gold-hair), var(--gold-hair)),
+    linear-gradient(var(--gold-hair), var(--gold-hair)),
+    linear-gradient(var(--gold-hair), var(--gold-hair)),
+    linear-gradient(var(--gold-hair), var(--gold-hair)),
+    linear-gradient(var(--gold-hair), var(--gold-hair)),
+    linear-gradient(var(--gold-hair), var(--gold-hair)),
+    linear-gradient(var(--gold-hair), var(--gold-hair));
+  --bracket-pos: 0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%;
+  --bracket-size: 13px 1px, 1px 13px, 13px 1px, 1px 13px,
+    13px 1px, 1px 13px, 13px 1px, 1px 13px;
+}
+
+/* ---------------------------------------------------------------------------
+   2 · 基础排版：整体调大、放开行高、稳定字距与字重层级
+   ------------------------------------------------------------------------- */
+html { text-rendering: optimizeLegibility; }
+body {
+  font-size: var(--fs-body);
+  line-height: 1.85;
+  letter-spacing: 0.012em;
+  font-feature-settings: "kern" 1, "liga" 1;
+  font-variant-numeric: proportional-nums;
+  /* 极淡的织纹 + 暗角：营造羊皮纸/天鹅绒的沉浸底，明度差 < 3% */
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(ellipse 120% 90% at 50% -20%, rgba(200, 164, 92, 0.035), transparent 62%),
+    radial-gradient(ellipse 100% 80% at 50% 115%, rgba(0, 0, 0, 0.45), transparent 66%),
+    repeating-linear-gradient(45deg, rgba(200, 164, 92, 0.012) 0 1px, transparent 1px 7px);
+  background-attachment: fixed;
+}
+::selection { background: rgba(200, 164, 92, 0.32); color: #fff8e8; }
+
+/* 标题：serif display，字重恒 400，大标题轻微收紧字距（仅作用于拉丁） */
+.page-title {
+  font-family: var(--display);
+  font-size: var(--fs-h1);
+  font-weight: 400;
+  line-height: 1.32;
+  letter-spacing: 0.04em;
+  text-wrap: balance;
+}
+.section-title, .panel-title, .scene-name, .step-name, .entry-card,
+.verdict-quote, .followup-title, .cd-big-name, .lc-name, .veil-title,
+.ritual-title, .draw-mode-name, .detail-fold > summary, .auth-head {
+  font-family: var(--display);
+  font-weight: 400;
+}
+.section-title { font-size: var(--fs-h3); letter-spacing: 0.06em; }
+.panel-title { font-size: var(--fs-lead); }
+.scene-name { font-size: 21px; }
+.step-name { font-size: var(--fs-lead); }
+.entry-card { font-size: 19px; }
+.followup-title { font-size: var(--fs-h2); line-height: 1.4; }
+.cd-big-name { font-size: 30px; }
+.lc-name { font-size: var(--fs-lead); }
+.veil-title { font-size: 36px; }
+
+.page-desc {
+  font-size: var(--fs-body);
+  line-height: 1.9;
+  max-width: 46em;           /* 约 65–70 汉字，符合编辑式行宽 */
+  margin-bottom: 44px;
+  color: var(--text-2);
+  text-wrap: pretty;
+}
+.scene-topics { font-size: var(--fs-caption); line-height: 1.7; text-wrap: pretty; }
+.scene-focus { font-size: var(--fs-label); line-height: 1.75; text-wrap: pretty; }
+/* 段落级排版节奏：避免尾行孤字，中文标点挤压更自然 */
+.hint, .notice, .boundary, .step-body, .followup-desc,
+.fu-bubble, .vd-opening, .vd-prose p, .verdict-pos p, .cd-section p,
+.lc-keywords { text-wrap: pretty; }
+
+/* eyebrow：小号、宽字距、字重 500、降级色 —— 靠留白分组而非放大加粗 */
+.eyebrow, .field-label, .nav-label, .brand-sub, .step-stage,
+.vd-kicker, .cd-section h3, .verdict-section {
+  font-family: var(--display);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.eyebrow {
+  font-size: var(--fs-label);
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+.field-label { font-size: var(--fs-label); letter-spacing: 0.2em; color: var(--gold-dim); margin-bottom: 12px; }
+.nav-label { font-size: var(--fs-label); letter-spacing: 0.24em; margin-bottom: 18px; }
+.hint { font-size: var(--fs-caption); line-height: 1.8; }
+
+/* 拉丁铭文 / 罗马数字 / 卡牌索引：高对比衬线 + 古体数字，宫廷铭牌气质 */
+.brand-name, .brand-motto-latin, .nav-num, .step-num, .pos-seq,
+.source-id, .cd-english, .lc-english, .lc-top, .cd-big-english, .cd-big-top,
+.rf-index, .front-index, .ritual-cut-num, .veil-motto, .draw-mode-sigil,
+.lc-art-glyph, .cd-big-glyph, .scene-glyph {
+  font-family: var(--display);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+}
+.brand-name { font-size: 22px; letter-spacing: 0.16em; }
+.brand-motto-latin { font-size: 11.5px; letter-spacing: 0.28em; }
+.nav-num { font-size: 15px; }
+.step-num { font-size: 20px; }
+.scene-glyph { font-size: 24px; }
+
+/* ---------------------------------------------------------------------------
+   3 · 字号整体上调：按档位分组，密集卡牌角标只微增，避免撑破布局
+   ------------------------------------------------------------------------- */
+/* 3.1 微型角标：分两档。牌面/卡面内的密集标签只微增，避免撑破 78px 扇牌 */
+.ritual-slot-label, .draw-slot-label, .reason, .step-stage, .fu-who {
+  font-size: 11.5px;
+}
+.lc-top, .lc-english, .lc-keywords, .lc-seen, .rf-index, .rf-key,
+.rf-orient, .front-key, .front-orient, .cd-big-english {
+  font-size: 10.5px;
+}
+/* 3.2 标签 / 提示 10.5–12px → 12.5–13px */
+.cd-big-top, .cd-chip, .cd-scenes span, .cd-source, .cd-scenes p,
+.front-index, .draw-mode-meta, .draw-mode-desc, .draw-idle-hint,
+.ritual-step, .ritual-energy-text, .ritual-cut-num, .ritual-draw-hint,
+.ritual-detail p, .ritual-keyhint, .ritual-progress, .ritual-submitting p,
+.ritual-submit-step, .sidebar-replay, .sidebar-foot, .brand-sub,
+.brand-motto-zh, .brand-motto-latin, .entry-tag, .entry-pos, .pos-meaning,
+.source-score, .source-text, .verdict-state, .verdict-meta span,
+.fu-degraded, .fu-typing, .fu-foot, .fu-clear, .fu-who, .veil-skip,
+.veil-hint, .verdict-pos-head, .cd-meta-line, .cd-section p,
+.agent-script-row, .agent-panel, .auth-msg, .auth-foot, .auth-bar-user {
+  font-size: var(--fs-label);
+}
+/* 3.3 正文 / 说明 12.5–13.5px → 14–14.5px */
+.scene-topics, .scene-focus, .notice, .notice h4, .step-body,
+.step-body table, .card-option, .kv, .entry-text, .obs-list, .plain-list,
+.boundary, .source-head, .rule-btn, .draw-entry p, .draw-result-item .pos-seq,
+.ritual-intro p, .ritual-cut-progress, .ritual-draw-caption span,
+.ritual-complete-caption, .ritual-center-note, .draw-phase-hint,
+.followup-desc, .fu-bubble, .fu-input, .vd-cautions p, .vd-guidance-list li,
+.vd-theme p, .verdict-pos p, .verdict-para, .verdict-col ul, .verdict-col ol,
+.verdict-notes .verdict-pos-body p, .veil-praise-text,
+.auth-input, .auth-tab, .sidebar-account-name,
+.sidebar-account-login, .cd-section p, .agent-para, .fu-empty {
+  font-size: var(--fs-caption);
+  line-height: 1.85;
+}
+/* 3.4 正文主体 14–15px → 15px，字重层级靠字阶与颜色而非加粗 */
+.input, .textarea, .select, .chip, .toggle, .nav-item, .btn,
+.fu-chip, .rule-editor, .selected-card, .pos-name, .pos-seq,
+.verdict-pos-head span:nth-child(2), .verdict-col h4, .detail-fold > summary,
+.verdict-summary p, .verdict-meta strong, .cd-title, .cd-two,
+.from-velum .fu-bubble, .fu-typing, .auth-head {
+  font-size: var(--fs-body);
+}
+.rule-editor { font-size: 13.5px; line-height: 1.8; }  /* 等宽编辑器保持紧凑 */
+/* 3.5 小标题 16–20px → 递增一档 */
+.reading-block h3, .verdict-quote, .panel-title, .step-name,
+.scene-name, .entry-card, .selected-card, .lc-name, .cd-big-name,
+.draw-mode-name, .ritual-title, .detail-fold > summary, .verdict-section {
+  letter-spacing: 0.05em;
+}
+.reading-block h3 { font-size: var(--fs-h3); }
+.verdict-quote { font-size: var(--fs-h2); line-height: 1.62; }
+.verdict-section { font-size: var(--fs-lead); text-transform: none; letter-spacing: 0.12em; }
+.detail-fold > summary { font-size: 16.5px; }
+/* 结果页文章主体：读起来像一封信，行高与段距放大 */
+.vd-opening, .vd-closing, .vd-prose p { font-size: 16.5px; line-height: 2.05; }
+.vd-theme p { font-size: 17px; line-height: 1.95; }
+.vd-quote { font-size: 28px; line-height: 1.6; }
+.fu-bubble, .from-velum .fu-bubble { font-size: 14.5px; line-height: 1.95; }
+.followup-title { font-size: var(--fs-h2); }
+
+/* ---------------------------------------------------------------------------
+   4 · 轮廓 / 转角 / 边角：锐角阶梯、去胶囊、纹章角括线、双层描边
+   ------------------------------------------------------------------------- */
+/* 4.1 胶囊 → 小型矩形铭牌（保留开关与圆形徽记的胶囊/圆形） */
+.sidebar-replay, .veil-skip, .entry-tag, .reason, .cd-chip,
+.cd-meta-line span, .fu-chip, .lc-suit, .auth-tab, .auth-submit,
+.sidebar-account-login, .btn, .chip,
+.rule-btn, .card-option, .ritual-close, .cd-close, .cd-nav {
+  border-radius: var(--r-sm);
+}
+.panel, .scene-card, .boundary, .detail-fold, .followup, .auth-box,
+.auth-modal, .verdict-wrap, .verdict-col, .verdict-pos, .fu-thread,
+.fu-bubble, .fu-input, .ritual-frame, .card-detail-frame,
+.library-card, .cd-big-art, .cd-big-card, .cd-big-frame, .lc-frame,
+.draw-entry, .draw-mode, .draw-stage, .card-face, .card-back,
+.ritual-face, .ritual-card, .front-inner, .back-frame,
+.sidebar-account, .auth-bar, .auth-input, .auth-seal {
+  border-radius: var(--r-md);
+}
+/* 牌面是实体卡片，圆角略大但仍克制；与外框同心 */
+.card-face, .card-back, .ritual-face, .ritual-card, .front-inner,
+.back-frame, .cd-big-card, .cd-big-art, .lc-frame { border-radius: var(--r-lg); }
+/* 开关保留功能性胶囊 */
+.toggle input, .toggle input::after { border-radius: 999px; }
+
+/* 4.2 纹章角括线：用 ::after 叠一层四角 L 形发丝线，不占用既有伪元素语义。
+   已有菱形角饰的 .verdict-wrap / .ritual-frame / .card-detail-frame 不叠加；
+   .followup 保留其双层内框身份，也不叠加，避免两层角饰打架。 */
+.panel, .boundary, .detail-fold, .auth-box, .scene-card { position: relative; }
+.panel::after, .boundary::after, .detail-fold::after,
+.auth-box::after, .scene-card::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  background-image: var(--brackets);
+  background-position: var(--bracket-pos);
+  background-size: var(--bracket-size);
+  background-repeat: no-repeat;
+  opacity: 0.7;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.scene-card:hover::after, .panel:hover::after { opacity: 1; }
+/* 弹窗用 ::before 叠角饰（::after 保留给未来状态） */
+.auth-modal::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  pointer-events: none;
+  background-image: var(--brackets);
+  background-position: var(--bracket-pos);
+  background-size: var(--bracket-size);
+  background-repeat: no-repeat;
+  opacity: 0.8;
+}
+
+/* 4.3 双层描边：外发丝线 + 内嵌 1px 高光，替代单层平板的「浮起一块板」 */
+.panel, .boundary, .detail-fold, .auth-box, .scene-card,
+.verdict-col, .verdict-pos, .pos-box, .card-picker, .library-card {
+  box-shadow:
+    inset 0 1px 0 rgba(230, 201, 135, 0.07),
+    inset 0 0 0 1px rgba(200, 164, 92, 0.055),
+    var(--shadow-near), var(--shadow-far);
+}
+.panel, .auth-box, .detail-fold { border-color: var(--line); }
+/* .followup / .verdict-wrap 原本的 6px+7px 双层内框是其身份，保留并只补柔和外阴影 */
+.followup, .verdict-wrap {
+  box-shadow:
+    inset 0 1px 0 rgba(200, 164, 92, 0.14),
+    inset 0 0 0 6px var(--ink-2),
+    inset 0 0 0 7px rgba(200, 164, 92, 0.1),
+    var(--shadow-far);
+}
+
+/* 4.4 渐隐发丝分隔线：编辑式而非硬切的 1px 实线 */
+.section-title::after, .reading-block h3::after, .verdict-section::after,
+.cd-section h3::after {
+  background: linear-gradient(90deg, rgba(200, 164, 92, 0.32), rgba(200, 164, 92, 0));
+}
+.sidebar-rule {
+  background: linear-gradient(90deg, var(--gold-hair), rgba(200, 164, 92, 0.04));
+}
+
+/* ---------------------------------------------------------------------------
+   5 · 间距节奏：区块间距 > 卡内间距 > 元素间距
+   ------------------------------------------------------------------------- */
+.main { padding: 56px 68px 96px; }
+.main-inner { max-width: 1040px; }
+.panel, .auth-box { padding: 28px 32px; }
+.followup, .verdict-wrap { padding: 34px 38px 30px; }
+.scene-card { padding: 30px 26px; }
+.grid { gap: 20px; }
+.grid-3, .grid-2 { gap: 20px; }
+.btn-row { margin-top: 34px; gap: 14px; }
+.section-title { margin: 52px 0 24px; }
+.reading-block { margin-bottom: 40px; }
+.sidebar { padding: 46px 30px 28px; }
+.brand-motto { margin-top: 20px; }
+.sidebar-rule { margin: 26px 0 24px; }
+.nav-list { gap: 6px; }
+.nav-item { padding: 11px 14px; }
+/* 与品牌下方的菱形分隔线呼应：页脚前再来一道发丝线，保证放大字号后仍有呼吸 */
+.sidebar-foot {
+  padding-top: 18px;
+  border-top: 1px solid var(--gold-hair-soft);
+}
+.steps, .pos-grid { gap: 16px; }
+.entry { margin-bottom: 22px; }
+
+/* ---------------------------------------------------------------------------
+   6 · 交互动效：单一缓动族、逐属性枚举（禁用 transition: all）、进慢出快
+   ------------------------------------------------------------------------- */
+.btn, .chip, .nav-item, .scene-card, .card-option, .rule-btn,
+.sidebar-replay, .veil-skip, .fu-chip, .cd-chip, .auth-tab,
+.auth-input, .auth-submit, .sidebar-account-login,
+.input, .textarea, .select, .brand-seal, .ritual-close, .cd-close,
+.cd-nav, .fu-clear, .fu-send, .library-card, .toggle input,
+.detail-fold > summary, .cd-inline-link, .entry-tag {
+  transition:
+    transform var(--dur-quick) var(--ease-out),
+    border-color var(--dur-quick) var(--ease-out),
+    background-color var(--dur-quick) var(--ease-out),
+    color var(--dur-quick) var(--ease-out),
+    box-shadow var(--dur-quick) var(--ease-out),
+    opacity var(--dur-quick) var(--ease-out);
+}
+/* hover 抬升幅度收敛到 2px，配合双层软阴影；不再用大幅度 translate */
+.scene-card:hover, .library-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-dim);
+  box-shadow:
+    inset 0 1px 0 rgba(230, 201, 135, 0.1),
+    inset 0 0 0 1px rgba(200, 164, 92, 0.09),
+    var(--shadow-lift);
+}
+.btn:hover:not(:disabled), .fu-chip:hover:not(:disabled),
+.chip:hover, .card-option:hover {
+  transform: translateY(-1px);
+  border-color: var(--gold);
+}
+.nav-item:hover:not(:disabled) { border-left-color: var(--gold-hair); }
+.brand-seal:hover { transform: translateY(-1px) rotate(-1.5deg); }
+
+/* tactile press state：按压回弹，克制不夸张 */
+.btn:active:not(:disabled), .chip:active, .fu-chip:active:not(:disabled),
+.nav-item:active:not(:disabled), .scene-card:active,
+.card-option:active, .rule-btn:active, .sidebar-replay:active {
+  transform: translateY(1px) scale(0.992);
+}
+
+/* 金色 focus ring（键盘可达性 + 工艺细节） */
+:where(button, a, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+.input:focus, .textarea:focus, .select:focus, .auth-input:focus,
+.fu-input:focus {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 0 3px rgba(200, 164, 92, 0.1);
+}
+
+/* 主按钮：扁平金底 + 细高光，去渐变堆砌；hover 用明度变化而非发光 */
+.btn-primary {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+.btn-primary:hover:not(:disabled) { background: var(--gold-bright); border-color: var(--gold-bright); }
+.btn { letter-spacing: 0.13em; padding: 12px 24px; }
+
+/* ---------------------------------------------------------------------------
+   7 · 入场节奏：标题/描述错开 50ms 的极轻上浮，只动 opacity + transform
+   ------------------------------------------------------------------------- */
+@keyframes velumRise {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: none; }
+}
+.eyebrow     { animation: velumRise var(--dur-slow) var(--ease-out) both; }
+.page-title  { animation: velumRise var(--dur-slow) var(--ease-out) 50ms both; }
+.page-desc   { animation: velumRise var(--dur-slow) var(--ease-out) 100ms both; }
+
+/* ---------------------------------------------------------------------------
+   8 · 滚动条与细节
+   ------------------------------------------------------------------------- */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(200, 164, 92, 0.26);
+  border: 2px solid var(--ink);
+  border-radius: var(--r-sm);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(200, 164, 92, 0.45); }
+* { scrollbar-color: rgba(200, 164, 92, 0.3) transparent; scrollbar-width: thin; }
+
+/* ---------------------------------------------------------------------------
+   9 · 响应式与动效降级（最后生效，覆盖前面所有放大值）
+   ------------------------------------------------------------------------- */
+@media (max-width: 980px) {
+  .main { padding: 34px 24px 68px; }
+  .page-title { font-size: 30px; }
+  .section-title { margin: 38px 0 18px; }
+  .panel, .auth-box, .followup, .verdict-wrap { padding: 22px 20px; }
+  .scene-card { padding: 24px 20px; }
+  .veil-title { font-size: 28px; }
+  .verdict-quote, .vd-quote { font-size: 22px; }
+  .followup-title { font-size: 21px; }
+  .cd-big-name { font-size: 24px; }
+  .grid-3, .grid-2 { gap: 14px; }
+  .btn { padding: 11px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

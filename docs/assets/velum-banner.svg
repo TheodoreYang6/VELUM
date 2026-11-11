@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="VELUM｜帷间 · ARCANUM SUB VELO">
+  <defs>
+    <radialGradient id="vbGlow" cx="50%" cy="46%" r="62%">
+      <stop offset="0%" stop-color="#1a2230"/>
+      <stop offset="55%" stop-color="#101722"/>
+      <stop offset="100%" stop-color="#080c13"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#vbGlow)"/>
+
+  <!-- 极淡织纹 -->
+  <g stroke="#c8a45c" stroke-width="0.4" opacity="0.045">
+    <path d="M0 0 L400 400 M100 0 L500 400 M200 0 L600 400 M300 0 L700 400 M400 0 L800 400 M500 0 L900 400 M600 0 L1000 400 M700 0 L1100 400 M800 0 L1200 400"/>
+    <path d="M1200 0 L800 400 M1100 0 L700 400 M1000 0 L600 400 M900 0 L500 400 M800 0 L400 400 M700 0 L300 400 M600 0 L200 400 M500 0 L100 400 M400 0 L0 400"/>
+  </g>
+
+  <!-- 双层外框与四角纹章括线 -->
+  <rect x="18" y="18" width="1164" height="364" fill="none" stroke="#7c6537" stroke-width="0.8" opacity="0.55"/>
+  <rect x="27" y="27" width="1146" height="346" fill="none" stroke="#c8a45c" stroke-width="0.4" opacity="0.28"/>
+  <g fill="none" stroke="#c8a45c" stroke-width="1.1" opacity="0.72">
+    <path d="M36 74 V36 H74"/><path d="M1164 74 V36 H1126"/>
+    <path d="M36 326 V364 H74"/><path d="M1164 326 V364 H1126"/>
+  </g>
+  <g fill="#e6c987" opacity="0.7">
+    <path d="M53 27 l4 6 -4 6 -4 -6 z"/><path d="M1147 27 l4 6 -4 6 -4 -6 z"/>
+    <path d="M53 367 l4 6 -4 6 -4 -6 z"/><path d="M1147 367 l4 6 -4 6 -4 -6 z"/>
+  </g>
+
+  <!-- 中央徽记：与前端 velum-mark.svg 同源构件 -->
+  <g transform="translate(520.8 30) scale(0.66)">
+    <circle cx="120" cy="120" r="104" fill="none" stroke="#7c6537" stroke-width="1" opacity="0.8"/>
+    <circle cx="120" cy="120" r="97" fill="none" stroke="#c8a45c" stroke-width="0.5" opacity="0.45"/>
+    <circle cx="120" cy="120" r="88" fill="none" stroke="#c8a45c" stroke-width="0.4" stroke-dasharray="2 8" opacity="0.35"/>
+
+    <g fill="#c8a45c" opacity="0.85">
+      <path d="M190.7 43.3 l4 6 -4 6 -4 -6 z"/>
+      <path d="M49.3 43.3 l4 6 -4 6 -4 -6 z"/>
+      <path d="M190.7 184.7 l4 6 -4 6 -4 -6 z"/>
+      <path d="M49.3 184.7 l4 6 -4 6 -4 -6 z"/>
+    </g>
+
+    <path d="M120 30 L210 120 L120 210 L30 120 Z" fill="none" stroke="#c8a45c" stroke-width="1" opacity="0.85"/>
+    <path d="M120 44 L196 120 L120 196 L44 120 Z" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+    <path d="M120 54 L186 120 L120 186 L54 120 Z" fill="none" stroke="#c8a45c" stroke-width="0.4" opacity="0.38"/>
+
+    <g stroke-linecap="round">
+      <path d="M64 50 H176" fill="none" stroke="#c8a45c" stroke-width="1.3"/>
+      <path d="M64 54 H176" fill="none" stroke="#7c6537" stroke-width="0.5"/>
+      <path d="M64 50 V60" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+      <path d="M176 50 V60" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+    </g>
+    <g fill="#c8a45c">
+      <circle cx="64" cy="50" r="3.4"/><circle cx="176" cy="50" r="3.4"/>
+      <path d="M120 45 l4 5 -4 5 -4 -5 z"/>
+    </g>
+
+    <path d="M64 57 Q 92 80, 120 62" fill="none" stroke="#e6c987" stroke-width="1.1"/>
+    <path d="M176 57 Q 148 80, 120 62" fill="none" stroke="#e6c987" stroke-width="1.1"/>
+    <path d="M64 62 Q 92 86, 120 68" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+    <path d="M176 62 Q 148 86, 120 68" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+
+    <path d="M62 58 C 68 102, 88 146, 120 182" fill="none" stroke="#e6c987" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M178 58 C 172 102, 152 146, 120 182" fill="none" stroke="#e6c987" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M72 58 C 77 98, 94 140, 120 172" fill="none" stroke="#c8a45c" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M168 58 C 163 98, 146 140, 120 172" fill="none" stroke="#c8a45c" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M82 58 C 86 94, 100 132, 120 162" fill="none" stroke="#7c6537" stroke-width="0.7" stroke-linecap="round"/>
+    <path d="M158 58 C 154 94, 140 132, 120 162" fill="none" stroke="#7c6537" stroke-width="0.7" stroke-linecap="round"/>
+
+    <circle cx="120" cy="104" r="26" fill="none" stroke="#c8a45c" stroke-width="0.5" stroke-dasharray="2 4" opacity="0.6"/>
+    <g fill="#e6c987" opacity="0.8">
+      <circle cx="120" cy="76" r="1.1"/><circle cx="140" cy="84" r="1.1"/>
+      <circle cx="148" cy="104" r="1.1"/><circle cx="140" cy="124" r="1.1"/>
+      <circle cx="120" cy="132" r="1.1"/><circle cx="100" cy="124" r="1.1"/>
+      <circle cx="92" cy="104" r="1.1"/><circle cx="100" cy="84" r="1.1"/>
+    </g>
+    <path d="M120 84 L125 99 L140 104 L125 109 L120 124 L115 109 L100 104 L115 99 Z" fill="#c8a45c"/>
+    <path d="M120 96 L128 104 L120 112 L112 104 Z" fill="#0a0e15"/>
+
+    <g fill="none" stroke="#7c6537">
+      <path d="M92 192 H148" stroke-width="0.8"/><path d="M98 197 H142" stroke-width="0.4"/>
+    </g>
+    <path d="M120 186 l5 6 -5 6 -5 -6 z" fill="#c8a45c"/>
+    <circle cx="120" cy="203" r="1.6" fill="#e6c987"/>
+  </g>
+
+  <!-- 拉丁铭文 + 其下的短菱形分隔；两侧翼线与主标题同高，不与文字交叠 -->
+  <g text-anchor="middle" font-family="Georgia, 'Times New Roman', serif">
+    <text x="600" y="232" font-size="14" letter-spacing="10" fill="#c8a45c" opacity="0.92">ARCANUM SUB VELO</text>
+  </g>
+  <g stroke="#c8a45c" stroke-width="0.8" fill="none" opacity="0.38">
+    <path d="M486 252 H566"/><path d="M634 252 H714"/>
+  </g>
+  <path d="M600 247 l5 5 -5 5 -5 -5 z" fill="#c8a45c"/>
+
+  <!-- 品牌字 -->
+  <g text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Noto Serif SC', 'Songti SC', serif">
+    <text x="600" y="312" font-size="48" letter-spacing="13" fill="#e6c987">VELUM｜帷间</text>
+    <text x="600" y="344" font-size="14" letter-spacing="7" fill="#c8a45c" opacity="0.85">塔 罗 仪 式 辅 助 · 古 典 占 问</text>
+    <text x="600" y="368" font-size="11" letter-spacing="4" fill="#7c6537">RIDER–WAITE–SMITH · 1909</text>
+  </g>
+  <g stroke="#c8a45c" stroke-width="0.8" fill="none" opacity="0.3">
+    <path d="M110 296 H402"/><path d="M798 296 H1090"/>
+  </g>
+  <g fill="#c8a45c" opacity="0.65">
+    <path d="M412 296 l4 4 -4 4 -4 -4 z"/><path d="M788 296 l4 4 -4 4 -4 -4 z"/>
+  </g>
+
+  <!-- 底部菱形收束 -->
+  <g fill="#c8a45c" opacity="0.55">
+    <circle cx="566" cy="378" r="1.1"/><circle cx="634" cy="378" r="1.1"/>
+  </g>
+</svg>

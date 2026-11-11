@@ -1,0 +1,95 @@
+.followup {
+  margin-top: 40px;
+  padding: 30px 34px 26px;
+  background: var(--ink-2);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r-md);
+  box-shadow: inset 0 1px 0 rgba(200,164,92,.14), inset 0 0 0 6px var(--ink-2), inset 0 0 0 7px rgba(200,164,92,.1);
+}
+.followup-head .eyebrow { margin-bottom: 10px; }
+.followup-title {
+  font-family: var(--serif); font-size: 24px; font-weight: 400;
+  letter-spacing: .05em; color: var(--text); margin: 0 0 10px; line-height: 1.45;
+}
+.followup-desc { color: var(--text-2); font-size: 13px; line-height: 1.9; margin: 0; max-width: 720px; }
+
+.fu-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
+.fu-chip {
+  background: transparent; border: 1px solid var(--line-soft); color: var(--text-2);
+  font-size: 12px; line-height: 1.6; padding: 7px 13px; border-radius: 999px;
+  text-align: left; transition: color .2s, border-color .2s, background .2s;
+}
+.fu-chip:hover:not(:disabled) { color: var(--gold-bright); border-color: var(--gold-dim); background: rgba(200,164,92,.05); }
+.fu-chip:disabled { opacity: .45; cursor: not-allowed; }
+
+.fu-thread {
+  margin-top: 24px; padding: 20px 20px 8px;
+  min-height: 132px; max-height: 520px; overflow-y: auto;
+  border: 1px solid var(--line-soft); border-radius: var(--r-sm);
+  background: var(--ink);
+  scrollbar-width: thin; scrollbar-color: var(--gold-dim) transparent;
+}
+.fu-thread::-webkit-scrollbar { width: 6px; }
+.fu-thread::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+.fu-empty {
+  color: var(--text-3); font-family: var(--serif); font-size: 13px;
+  line-height: 1.95; text-align: center; padding: 22px 16px;
+}
+.fu-msg { margin-bottom: 22px; display: flex; flex-direction: column; gap: 7px; }
+.fu-msg.from-querent { align-items: flex-end; }
+.fu-msg.from-velum { align-items: flex-start; }
+.fu-who {
+  font-size: 10px; letter-spacing: .2em; color: var(--text-3); padding: 0 4px;
+}
+.fu-msg.from-velum .fu-who { color: var(--gold-dim); }
+.fu-bubble {
+  max-width: 86%; padding: 14px 18px; border-radius: var(--r-sm);
+  font-size: 13px; line-height: 1.95;
+}
+.fu-bubble p { margin: 0 0 10px; }
+.fu-bubble p:last-child { margin-bottom: 0; }
+.from-querent .fu-bubble {
+  background: rgba(200,164,92,.07); border: 1px solid var(--line);
+  color: var(--text); font-family: var(--serif);
+}
+.from-velum .fu-bubble {
+  background: var(--ink-2); border: 1px solid var(--line-soft);
+  border-left: 2px solid var(--gold-dim);
+  color: var(--text-2); font-family: var(--serif); font-size: 13.5px;
+}
+.fu-degraded { margin-top: 10px; font-size: 11px; color: var(--text-3); font-family: var(--sans); }
+.fu-typing { color: var(--text-3); font-family: var(--sans); font-size: 12px; letter-spacing: .06em; }
+.fu-typing span { color: var(--gold); letter-spacing: .3em; margin-right: 8px; }
+.fu-error { margin-top: 14px; }
+
+.fu-compose { display: flex; gap: 12px; align-items: stretch; margin-top: 16px; }
+.fu-input {
+  flex: 1; min-width: 0; resize: vertical; min-height: 62px;
+  background: var(--ink); color: var(--text);
+  border: 1px solid var(--line-soft); border-radius: var(--r-sm);
+  padding: 12px 14px; font-size: 13px; line-height: 1.75;
+  outline: none; transition: border-color .2s;
+}
+.fu-input::placeholder { color: var(--text-3); }
+.fu-input:focus { border-color: var(--gold-dim); }
+.fu-input:disabled { opacity: .6; }
+.fu-send { flex: 0 0 auto; align-self: stretch; min-width: 108px; }
+.fu-foot {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  margin-top: 12px; font-size: 11px; color: var(--text-3);
+}
+.fu-clear {
+  background: transparent; border: 0; color: var(--text-3);
+  font-size: 11px; letter-spacing: .1em; padding: 4px 6px;
+  border-bottom: 1px solid transparent; transition: color .2s, border-color .2s;
+}
+.fu-clear:hover:not(:disabled) { color: var(--gold-bright); border-color: var(--gold-dim); }
+.fu-clear:disabled { opacity: .4; cursor: not-allowed; }
+
+@media (max-width: 980px) {
+  .followup { padding: 22px 18px; }
+  .followup-title { font-size: 20px; }
+  .fu-bubble { max-width: 94%; }
+  .fu-compose { flex-direction: column; }
+  .fu-send { align-self: flex-end; }
+}

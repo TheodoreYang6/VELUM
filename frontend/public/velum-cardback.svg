@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" preserveAspectRatio="xMidYMid slice" role="img" aria-label="VELUM 帷间 卡背">
+  <defs>
+    <linearGradient id="cbBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101a2c"/>
+      <stop offset="0.55" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#080d16"/>
+    </linearGradient>
+    <pattern id="cbLattice" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 11 H22 M11 0 V22" stroke="#c8a45c" stroke-width="0.4" opacity="0.16"/>
+    </pattern>
+    <radialGradient id="cbGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c8a45c" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#c8a45c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="200" height="320" fill="url(#cbBg)"/>
+  <rect width="200" height="320" fill="url(#cbLattice)"/>
+  <circle cx="100" cy="160" r="92" fill="url(#cbGlow)"/>
+
+  <!-- 卡面外框（三重金线） -->
+  <rect x="7" y="7" width="186" height="306" rx="9" fill="none" stroke="#7c6537" stroke-width="1.4"/>
+  <rect x="12" y="12" width="176" height="296" rx="6" fill="none" stroke="#c8a45c" stroke-width="0.8" opacity="0.7"/>
+  <rect x="16" y="16" width="168" height="288" rx="4" fill="none" stroke="#c8a45c" stroke-width="0.4" opacity="0.35"/>
+
+  <!-- 四角刻点 -->
+  <g fill="#e6c987">
+    <path d="M14 14 l3 4 -3 4 -3 -4 z"/>
+    <path d="M186 14 l3 4 -3 4 -3 -4 z"/>
+    <path d="M14 306 l3 4 -3 4 -3 -4 z"/>
+    <path d="M186 306 l3 4 -3 4 -3 -4 z"/>
+  </g>
+
+  <!-- 中央 VELUM 徽记（复用主标识图形） -->
+  <g transform="translate(100 160) scale(0.62) translate(-120 -120)">
+    <circle cx="120" cy="120" r="104" fill="none" stroke="#7c6537" stroke-width="1"/>
+    <circle cx="120" cy="120" r="97" fill="none" stroke="#c8a45c" stroke-width="0.5" opacity="0.45"/>
+
+    <g fill="#c8a45c">
+      <path d="M190.7 43.3 l4 6 -4 6 -4 -6 z"/>
+      <path d="M49.3 43.3 l4 6 -4 6 -4 -6 z"/>
+      <path d="M190.7 184.7 l4 6 -4 6 -4 -6 z"/>
+      <path d="M49.3 184.7 l4 6 -4 6 -4 -6 z"/>
+    </g>
+    <g fill="#e6c987" opacity="0.75">
+      <circle cx="190.7" cy="49.3" r="1.2"/>
+      <circle cx="49.3" cy="49.3" r="1.2"/>
+      <circle cx="190.7" cy="190.7" r="1.2"/>
+      <circle cx="49.3" cy="190.7" r="1.2"/>
+    </g>
+
+    <path d="M120 30 L210 120 L120 210 L30 120 Z" fill="none" stroke="#c8a45c" stroke-width="1"/>
+    <path d="M120 44 L196 120 L120 196 L44 120 Z" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+    <path d="M120 54 L186 120 L120 186 L54 120 Z" fill="none" stroke="#c8a45c" stroke-width="0.4" opacity="0.4"/>
+
+    <g stroke-linecap="round">
+      <path d="M64 50 H176" fill="none" stroke="#c8a45c" stroke-width="1.3"/>
+      <path d="M64 54 H176" fill="none" stroke="#7c6537" stroke-width="0.5"/>
+      <path d="M64 50 V60" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+      <path d="M176 50 V60" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+    </g>
+    <g fill="#c8a45c">
+      <circle cx="64" cy="50" r="3.4"/>
+      <circle cx="176" cy="50" r="3.4"/>
+      <path d="M120 45 l4 5 -4 5 -4 -5 z"/>
+    </g>
+
+    <path d="M64 57 Q 92 80, 120 62" fill="none" stroke="#e6c987" stroke-width="1.1"/>
+    <path d="M176 57 Q 148 80, 120 62" fill="none" stroke="#e6c987" stroke-width="1.1"/>
+    <path d="M64 62 Q 92 86, 120 68" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+    <path d="M176 62 Q 148 86, 120 68" fill="none" stroke="#7c6537" stroke-width="0.6"/>
+    <g fill="#c8a45c" opacity="0.85">
+      <path d="M82 71 l2 3 -2 3 -2 -3 z"/>
+      <path d="M100 76 l2 3 -2 3 -2 -3 z"/>
+      <path d="M158 71 l2 3 -2 3 -2 -3 z"/>
+      <path d="M140 76 l2 3 -2 3 -2 -3 z"/>
+    </g>
+
+    <path d="M62 58 C 68 102, 88 146, 120 182" fill="none" stroke="#e6c987" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M178 58 C 172 102, 152 146, 120 182" fill="none" stroke="#e6c987" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M72 58 C 77 98, 94 140, 120 172" fill="none" stroke="#c8a45c" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M168 58 C 163 98, 146 140, 120 172" fill="none" stroke="#c8a45c" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M82 58 C 86 94, 100 132, 120 162" fill="none" stroke="#7c6537" stroke-width="0.7" stroke-linecap="round"/>
+    <path d="M158 58 C 154 94, 140 132, 120 162" fill="none" stroke="#7c6537" stroke-width="0.7" stroke-linecap="round"/>
+
+    <g fill="none" stroke="#c8a45c" stroke-width="0.7">
+      <path d="M60 108 Q 68 103, 76 108"/>
+      <path d="M180 108 Q 172 103, 164 108"/>
+    </g>
+    <g fill="#e6c987">
+      <path d="M68 104 l2.6 4 -2.6 4 -2.6 -4 z"/>
+      <path d="M172 104 l2.6 4 -2.6 4 -2.6 -4 z"/>
+    </g>
+    <g fill="#c8a45c" opacity="0.85">
+      <path d="M87 134 l2 3 -2 3 -2 -3 z"/>
+      <path d="M101 158 l2 3 -2 3 -2 -3 z"/>
+      <path d="M153 134 l2 3 -2 3 -2 -3 z"/>
+      <path d="M139 158 l2 3 -2 3 -2 -3 z"/>
+    </g>
+
+    <circle cx="120" cy="104" r="26" fill="none" stroke="#c8a45c" stroke-width="0.5" stroke-dasharray="2 4" opacity="0.6"/>
+    <g fill="#e6c987" opacity="0.8">
+      <circle cx="120" cy="76" r="1.1"/>
+      <circle cx="140" cy="84" r="1.1"/>
+      <circle cx="148" cy="104" r="1.1"/>
+      <circle cx="140" cy="124" r="1.1"/>
+      <circle cx="120" cy="132" r="1.1"/>
+      <circle cx="100" cy="124" r="1.1"/>
+      <circle cx="92" cy="104" r="1.1"/>
+      <circle cx="100" cy="84" r="1.1"/>
+    </g>
+    <path d="M120 84 L125 99 L140 104 L125 109 L120 124 L115 109 L100 104 L115 99 Z" fill="#c8a45c"/>
+    <path d="M120 96 L128 104 L120 112 L112 104 Z" fill="#0a0e15"/>
+
+    <g fill="none" stroke="#7c6537">
+      <path d="M92 192 H148" stroke-width="0.8"/>
+      <path d="M98 197 H142" stroke-width="0.4"/>
+    </g>
+    <path d="M120 186 l5 6 -5 6 -5 -6 z" fill="#c8a45c"/>
+    <circle cx="120" cy="203" r="1.6" fill="#e6c987"/>
+  </g>
+
+  <!-- 底部拉丁铭文 -->
+  <text x="100" y="300" text-anchor="middle" font-family="'Noto Serif SC','Songti SC',Georgia,serif" font-size="9" letter-spacing="1.5" fill="#c8a45c" opacity="0.72">ARCANUM SUB VELO</text>
+</svg>

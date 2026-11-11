@@ -1,0 +1,58 @@
+backend/.env
+backend/.venv/
+backend/data/
+backend/__pycache__/
+backend/app/__pycache__/
+frontend/node_modules/
+frontend/dist/
+.idea/workspace.xml
+.idea/shelf/
+*.pyc
+
+# 操作系统 / 编辑器
+.DS_Store
+Thumbs.db
+*.swp
+
+# 日志与覆盖率
+*.log
+.coverage
+htmlcov/
+
+# 临时抓取 / 下载辅助脚本（非项目源码）
+_dl.sh
+_dl.log
+_fetch.sh
+_fetch.log
+_fetch_rws.py
+missing_jobs.txt
+
+# 维基共享资源抓取缓存（可重新生成，非源码）
+backend/ai.json
+backend/cat_members.json
+backend/thumb.json
+
+# IDE / 编辑器
+.idea/
+
+# PyCharm 私有自检 / 冒烟脚本（非通用源码）
+backend/verify_env.py
+backend/smoke_test.py
+
+# 智能体工作记忆（非项目源码）
+.workbuddy/
+
+# 本地视觉校验产生的临时产物（截图 / 无头浏览器配置 / CDP 脚本）
+_shot_*.png
+_crop_*.png
+_cdp_*.mjs
+_e2e.mjs
+_ssr_check.*
+_reading_fixture.json
+_edgeprofile*/
+# 其他无头浏览器临时配置目录
+_edge*/
+_banner_*.png
+_banner_*.mjs
+_readme_preview.html
+_preview.html

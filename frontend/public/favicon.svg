@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="VELUM 图标">
+  <rect width="240" height="240" rx="20" fill="#0a0e15"/>
+  <path d="M120 28 L212 120 L120 212 L28 120 Z" fill="none" stroke="#c8a45c" stroke-width="3"/>
+
+  <g fill="#c8a45c">
+    <path d="M190 44 l5 7 -5 7 -5 -7 z"/>
+    <path d="M50 44 l5 7 -5 7 -5 -7 z"/>
+    <path d="M190 182 l5 7 -5 7 -5 -7 z"/>
+    <path d="M50 182 l5 7 -5 7 -5 -7 z"/>
+  </g>
+
+  <path d="M62 60 C 69 102, 89 146, 120 182" fill="none" stroke="#e6c987" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M178 60 C 171 102, 151 146, 120 182" fill="none" stroke="#e6c987" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M78 60 C 83 98, 98 138, 120 168" fill="none" stroke="#7c6537" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M162 60 C 157 98, 142 138, 120 168" fill="none" stroke="#7c6537" stroke-width="2.2" stroke-linecap="round"/>
+
+  <path d="M120 78 L127 98 L147 105 L127 112 L120 132 L113 112 L93 105 L113 98 Z" fill="#c8a45c"/>
+  <path d="M120 96 L129 105 L120 114 L111 105 Z" fill="#0a0e15"/>
+
+  <path d="M100 194 H140" fill="none" stroke="#7c6537" stroke-width="2"/>
+  <path d="M120 187 l5 6 -5 6 -5 -6 z" fill="#c8a45c"/>
+</svg>
